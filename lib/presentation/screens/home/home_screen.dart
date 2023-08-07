@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:widgets/config/menu/menu_items.dart';
-import 'package:widgets/presentation/screens/buttons/buttons_screen.dart';
 
 class HomeScreen extends StatelessWidget {
+  //Route name
+  static const String name = 'home_screen';
+
   const HomeScreen({super.key});
 
   @override
@@ -43,6 +45,8 @@ class _MenuListItem extends StatelessWidget {
       trailing:
           const Icon(Icons.arrow_forward_ios_rounded, color: Colors.lightBlue),
       onTap: () {
+        //GoRouter.of(context).go(menuItem.link);
+        //context.go(menuItem.link);
         context.push(menuItem.link);
       },
     );
