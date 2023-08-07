@@ -11,7 +11,8 @@ class AppTheme {
   final int selectedColor;
 
   AppTheme({this.selectedColor = 0})
-      : assert((selectedColor < 0 || selectedColor > 3), 'Mal color mal');
+      : assert(selectedColor >= 0, 'Menor'),
+        assert(selectedColor < colors.length - 1, 'Mayor');
 
   ThemeData getTheme() => ThemeData(
       useMaterial3: true,
