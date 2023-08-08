@@ -35,9 +35,9 @@ class _AnimatedScreenState extends State<AnimatedScreen> {
       ),
       body: Center(
         child: AnimatedContainer(
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.easeOutCubic,
-          //curve: Curves.elasticOut,
+          duration: const Duration(milliseconds: 1000),
+          //curve: Curves.easeOutCubic,
+          curve: Curves.elasticOut,
           width: width,
           height: height,
           decoration: BoxDecoration(

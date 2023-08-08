@@ -39,4 +39,9 @@ const appMenuItems = <MenuItem>[
       subTitle: 'Stateful widget animado',
       link: '/animated',
       icon: Icons.animation),
+  MenuItem(
+      title: 'UI Controls container + Titles',
+      subTitle: 'Controles de Flutter',
+      link: '/ui-controls',
+      icon: Icons.check_box_outline_blank_rounded),
 ];
