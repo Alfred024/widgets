@@ -21,14 +21,16 @@ class _InfiniteScrollScreenState extends State<InfiniteScrollScreen> {
           removeTop: true,
           context: context,
           child: ListView.builder(
+              itemCount: imagesIds.length,
               itemBuilder: (context, index) => FadeInImage(
                   width: double.maxFinite,
                   height: 300,
                   fit: BoxFit.cover,
                   placeholder:
                       const AssetImage('assets/Images/jar-loading.gif'),
+                  //${imagesIds[index]}
                   image: NetworkImage(
-                      'https://picsum.photos/${imagesIds[index]}/237/200/300')))),
+                      'https://picsum.photos/id/${imagesIds[index]}/200/300')))),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.pop(),
         child: const Icon(Icons.arrow_back_ios),
