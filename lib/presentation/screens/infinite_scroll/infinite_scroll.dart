@@ -13,7 +13,7 @@ class InfiniteScrollScreen extends StatefulWidget {
 
 class _InfiniteScrollScreenState extends State<InfiniteScrollScreen> {
   final ScrollController scrollController = ScrollController();
-  bool loadingImages = false;
+  bool loadingWidgets = false;
   bool isMounted = true;
 
   List<int> imagesIds = [1, 2, 3, 4, 5];
@@ -37,17 +37,30 @@ class _InfiniteScrollScreenState extends State<InfiniteScrollScreen> {
   }
 
   Future loadImages() async {
-    if (!loadingImages) {
-      loadingImages = true;
+    if (!loadingWidgets) {
+      loadingWidgets = true;
       //Este set state especificamente permite ejecutar el ícono que muestra carga de imágenes.
       setState(() {});
       await Future.delayed(const Duration(seconds: 2));
       addImages();
-      loadingImages = false;
+      loadingWidgets = false;
       setState(() {});
       if (isMounted) {
         setState(() {});
       }
+    }
+  }
+
+  Future refreshImages() async {
+    if (isMounted) {
+      Future.delayed(const Duration(seconds: 1));
+      int currentId = imagesIds.last;
+      loadingWidgets = true;
+      imagesIds.clear();
+      imagesIds.add(currentId + 1);
+      addImages();
+      loadingWidgets = false;
+      setState(() {});
     }
   }
 
@@ -64,19 +77,22 @@ class _InfiniteScrollScreenState extends State<InfiniteScrollScreen> {
             removeBottom: true,
             removeTop: true,
             context: context,
-            child: ListView.builder(
-                controller: scrollController,
-                itemCount: imagesIds.length,
-                itemBuilder: (context, index) => FadeInImage(
-                    width: double.maxFinite,
-                    height: 300,
-                    fit: BoxFit.cover,
-                    placeholder:
-                        const AssetImage('assets/Images/jar-loading.gif'),
-                    //${imagesIds[index]}
-                    image: NetworkImage(
-                        'https://picsum.photos/id/${imagesIds[index]}/200/300')))),
-        floatingActionButton: loadingImages
+            child: RefreshIndicator(
+              onRefresh: refreshImages,
+              child: ListView.builder(
+                  controller: scrollController,
+                  itemCount: imagesIds.length,
+                  itemBuilder: (context, index) => FadeInImage(
+                      width: double.maxFinite,
+                      height: 300,
+                      fit: BoxFit.cover,
+                      placeholder:
+                          const AssetImage('assets/Images/jar-loading.gif'),
+                      //${imagesIds[index]}
+                      image: NetworkImage(
+                          'https://picsum.photos/id/${imagesIds[index]}/200/300'))),
+            )),
+        floatingActionButton: loadingWidgets
             ? SpinPerfect(
                 infinite: true, child: const Icon(Icons.refresh_rounded))
             : FloatingActionButton(
