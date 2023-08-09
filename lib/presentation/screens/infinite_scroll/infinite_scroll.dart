@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -38,7 +39,8 @@ class _InfiniteScrollScreenState extends State<InfiniteScrollScreen> {
   Future loadImages() async {
     if (!loadingImages) {
       loadingImages = true;
-      //setState(() {});
+      //Este set state especificamente permite ejecutar el ícono que muestra carga de imágenes.
+      setState(() {});
       await Future.delayed(const Duration(seconds: 2));
       addImages();
       loadingImages = false;
@@ -58,26 +60,28 @@ class _InfiniteScrollScreenState extends State<InfiniteScrollScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: MediaQuery.removePadding(
-          removeBottom: true,
-          removeTop: true,
-          context: context,
-          child: ListView.builder(
-              controller: scrollController,
-              itemCount: imagesIds.length,
-              itemBuilder: (context, index) => FadeInImage(
-                  width: double.maxFinite,
-                  height: 300,
-                  fit: BoxFit.cover,
-                  placeholder:
-                      const AssetImage('assets/Images/jar-loading.gif'),
-                  //${imagesIds[index]}
-                  image: NetworkImage(
-                      'https://picsum.photos/id/${imagesIds[index]}/200/300')))),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => context.pop(),
-        child: const Icon(Icons.arrow_back_ios),
-      ),
-    );
+        body: MediaQuery.removePadding(
+            removeBottom: true,
+            removeTop: true,
+            context: context,
+            child: ListView.builder(
+                controller: scrollController,
+                itemCount: imagesIds.length,
+                itemBuilder: (context, index) => FadeInImage(
+                    width: double.maxFinite,
+                    height: 300,
+                    fit: BoxFit.cover,
+                    placeholder:
+                        const AssetImage('assets/Images/jar-loading.gif'),
+                    //${imagesIds[index]}
+                    image: NetworkImage(
+                        'https://picsum.photos/id/${imagesIds[index]}/200/300')))),
+        floatingActionButton: loadingImages
+            ? SpinPerfect(
+                infinite: true, child: const Icon(Icons.refresh_rounded))
+            : FloatingActionButton(
+                onPressed: () => context.pop(),
+                child: const Icon(Icons.arrow_back_ios),
+              ));
   }
 }
