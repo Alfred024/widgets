@@ -54,4 +54,9 @@ const appMenuItems = <MenuItem>[
       subTitle: 'Un componente que hace Scroll infinito',
       link: '/infinite',
       icon: Icons.list_alt),
+  MenuItem(
+      title: 'Counter',
+      subTitle: 'Para sumar',
+      link: '/counter',
+      icon: Icons.add),
 ];
