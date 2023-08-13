@@ -9,13 +9,15 @@ const colors = <Color>[
 
 class AppTheme {
   final int selectedColor;
+  final bool darkMode;
 
-  AppTheme({this.selectedColor = 0})
+  AppTheme({this.selectedColor = 0, this.darkMode = false})
       : assert(selectedColor >= 0, 'Menor'),
-        assert(selectedColor < colors.length - 1, 'Mayor');
+        assert(selectedColor < colors.length, 'Mayor');
 
   ThemeData getTheme() => ThemeData(
       useMaterial3: true,
+      brightness: darkMode ? Brightness.dark : Brightness.light,
       colorSchemeSeed: colors[selectedColor],
       appBarTheme: const AppBarTheme(centerTitle: true));
 }
