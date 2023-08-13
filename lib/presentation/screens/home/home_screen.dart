@@ -6,15 +6,19 @@ import 'package:widgets/presentation/widgets/side_menu.dart';
 class HomeScreen extends StatelessWidget {
   //Route name
   static const String name = 'home_screen';
-
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final asideMenuKey = GlobalKey<ScaffoldState>();
+
     return Scaffold(
+        key: asideMenuKey,
         appBar: AppBar(title: const Text('Home Screen')),
         body: const _HomeView(),
-        drawer: const SideMenu());
+        drawer: SideMenu(
+          asideMenuKey: asideMenuKey,
+        ));
   }
 }
 

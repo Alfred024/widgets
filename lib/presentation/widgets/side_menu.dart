@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:widgets/config/menu/menu_items.dart';
 
 class SideMenu extends StatefulWidget {
-  const SideMenu({super.key});
+  final GlobalKey<ScaffoldState> asideMenuKey;
+  const SideMenu({super.key, required this.asideMenuKey});
 
   @override
   State<SideMenu> createState() => _SideMenuState();
@@ -20,6 +22,9 @@ class _SideMenuState extends State<SideMenu> {
       onDestinationSelected: (indexTapped) {
         setState(() {
           drawerIndex = indexTapped;
+          final menuItemSelected = appMenuItems[drawerIndex];
+          context.push(menuItemSelected.link);
+          widget.asideMenuKey.currentState?.closeDrawer();
         });
       },
       children: [
