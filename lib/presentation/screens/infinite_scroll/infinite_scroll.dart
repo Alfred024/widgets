@@ -39,6 +39,7 @@ class _InfiniteScrollScreenState extends State<InfiniteScrollScreen> {
   Future loadImages() async {
     if (!loadingWidgets) {
       loadingWidgets = true;
+      moveScrollToBottom();
       //Este set state especificamente permite ejecutar el ícono que muestra carga de imágenes.
       setState(() {});
       await Future.delayed(const Duration(seconds: 2));
@@ -62,6 +63,15 @@ class _InfiniteScrollScreenState extends State<InfiniteScrollScreen> {
       loadingWidgets = false;
       setState(() {});
     }
+  }
+
+  void moveScrollToBottom() {
+    if (scrollController.position.pixels + 150 <=
+        scrollController.position.maxScrollExtent) return;
+
+    scrollController.animateTo(scrollController.position.pixels + 200,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.fastOutSlowIn);
   }
 
   void addImages() {

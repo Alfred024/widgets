@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:widgets/config/menu/menu_items.dart';
+import 'package:widgets/presentation/widgets/side_menu.dart';
 
 class HomeScreen extends StatelessWidget {
   //Route name
@@ -11,9 +12,9 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Home Screen')),
-      body: const _HomeView(),
-    );
+        appBar: AppBar(title: const Text('Home Screen')),
+        body: const _HomeView(),
+        drawer: const SideMenu());
   }
 }
 
