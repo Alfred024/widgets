@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:widgets/config/theme/app_theme.dart';
 import 'package:widgets/presentation/providers/theme_provider.dart';
 
 class ThemeChangerScreen extends ConsumerWidget {
@@ -8,14 +9,16 @@ class ThemeChangerScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bool darkMode = ref.watch(darkModeOn);
+    //Para tener todos los estados de el AppThemeNotifier
+    final bool darkMode = ref.watch(themeNotidierProvider).darkMode;
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Theme changer'),
           actions: [
             IconButton(
                 onPressed: () {
-                  ref.read(darkModeOn.notifier).update((state) => !state);
+                  ref.read(themeNotidierProvider.notifier).darkModeSwitch();
                 },
                 icon: darkMode
                     ? const Icon(Icons.light_mode)
@@ -31,8 +34,9 @@ class _TheChangerView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<Color> colors = ref.watch(colorsList);
-    final int colorSelected = ref.watch(colorListSelected);
+    //final List<Color> colors = ref.watch(colorsList);
+    //final int colorSelected = ref.watch(colorListSelected);
+    final int selectedColor = ref.watch(themeNotidierProvider).selectedColor;
 
     return ListView.builder(
       itemCount: colors.length,
@@ -46,9 +50,10 @@ class _TheChangerView extends ConsumerWidget {
             style: TextStyle(color: colorOnIndex),
           ),
           value: index,
-          groupValue: colorSelected,
+          groupValue: selectedColor,
           onChanged: (value) {
-            ref.read(colorListSelected.notifier).update((state) => index);
+            ref.read(themeNotidierProvider.notifier).changeColor(index);
+            //ref.read(colorListSelected.notifier).update((state) => index);
           },
         );
         //return Text('Ola');
